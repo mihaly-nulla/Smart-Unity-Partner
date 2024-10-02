@@ -35,6 +35,7 @@ namespace LLMUnity
         [LLMAdvanced] public int parallelPrompts = -1;
         /// <summary> select to not destroy the LLM GameObject when loading a new Scene. </summary>
         [LLMAdvanced] public bool dontDestroyOnLoad = true;
+        [LLMAdvanced] public bool embeddingsOnly = false;
         /// <summary> Size of the prompt context (0 = context size of the model).
         /// This is the number of tokens the model can take as input when generating responses. </summary>
         [DynamicRange("minContextLength", "maxContextLength", false), Model] public int contextSize = 8192;
@@ -411,6 +412,7 @@ namespace LLMUnity
             arguments += loraArgument;
             arguments += $" -ngl {numGPULayers}";
             if (LLMUnitySetup.FullLlamaLib && flashAttention) arguments += $" --flash-attn";
+            if (embeddingsOnly) arguments += " --embedding";
 
             // the following is the equivalent for running from command line
             string serverCommand;
